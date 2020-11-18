@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div>测试跨域</div>
+<button onclick="fun1();">点击</button>
+
+</body>
+<script>
+    function fun1(){
+    var post_data = {'user':'xiao'}
+    console.log('执行')
+    $.ajax({
+     type:"post",
+     contentType:"application/json",
+     dataType:"json",
+     url:"http://127.0.0.1:8000/test",
+     data:JSON.stringify(post_data),
+     success:function(data){console.log(data)},
+
+
+
+    })}
+</script>
+</html>

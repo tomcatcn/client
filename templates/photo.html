@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<!--
+author:lvlu
+date:2018-07
+desc:this demo is about blog. PLEASE NOTE:If you have trouble running it ,try any of the other demos or connect with auther.
+A ny individuals and organizations and not for commercial use, professiona website for customized web site.
+-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/images/bitbug_favicon.ico" type="image/x-icon" />
+  <link href="/static/css/base.css" rel="stylesheet">
+  <link href="/static/css/index.css" rel="stylesheet">
+  <link href="/static/css/m.css" rel="stylesheet">
+  <script src="/static/js/jquery.min.js" type="text/javascript"></script>
+  <script src="/static/js/jquery.easyfader.min.js"></script>
+  <script src="/static/js/scrollReveal.js"></script>
+  <script src="/static/js/common.js"></script>
+  <script>
+    var url = document.location.toString();
+      var arrUrl = url.split("//");
+      //当前访问的博客博主
+      var blog_username = arrUrl[1].split('/')[1];
+      var html_body = '';
+      token = window.localStorage.getItem('dnblog_token');
+      //登陆的用户名
+      username = window.localStorage.getItem('dnblog_user');
+
+      $.ajax({
+         // 请求方式
+         type:"get",
+         // url
+         url:"http://172.17.0.9:8000/api/v1/photos/"+ blog_username,
+         beforeSend: function(request) {
+             request.setRequestHeader("Authorization", token);
+         },
+         success:function (result) {
+             if (200 == result.code){
+                 console.log(result);
+                 $(document).attr('title', '关于'+ result.username+'的wiki');
+                 header_html = makeHeader(blog_username, username)
+                 html_body += header_html
+
+                 html_body += '<div class="pagebg photo"> </div>';
+                 html_body += '<div class="container">';
+                 html_body +=  '<h1 class="t_nav"><span>好咖啡要和朋友一起品尝，好的故事也要和人一起分享。</span>'
+                 html_body +=  '<p class="n1">我的相册</p></h1>'
+                 html_body += '<div class="share"><ul>'
+                 if (username == blog_username)
+                 {
+                 html_body += '<li id="add_pics">'
+                 html_body += '<div class="shareli" ><a>'
+                 html_body += '<h2 style="height:238px;"><b style="font-size:30px;">添加相册</b></h2>'
+                 html_body += '</a></div>'
+                 html_body += '</li>'
+                 }
+
+                 var photos = result.data
+                 // 相册列表
+                 if(photos == 0){
+                     console.log('空空入也')
+                 }else{
+                      for(var p in photos){
+
+                      var pic_url = "http://172.17.0.9:5000/"+ blog_username+'/photos/detail/'+photos[p].photos_id
+                      var pic_name = photos[p].photos_name
+                      var pic_cover = photos[p].photos_cover
+                      var p_id = photos[p].photos_id
+                      html_body += '<li >'
+                      html_body += '<div class="shareli"><a href="'+pic_url+'" target="_blank"> <i><img src="'+'http://172.17.0.9:8000/media/'+pic_cover+'"></i>'
+                      html_body += '<h2><b>'+pic_name+'</b></h2>'
+                      if (username == blog_username){
+                      html_body +=  '<span class="del">删除<span  style="display:none">'+p_id+'</span></span>'
+                      }
+
+                      html_body +=  '</a></div>'
+                      html_body +=  '</li>'
+                      }
+                 }
+                 html_body += '</div>'
+
+
+
+                 //footer
+                 html_body += '<footer id="footer">';
+                 html_body += '<p>Design by <a href=# target="_blank">';
+                 html_body += blog_username;
+                 html_body += '</a>';
+                 html_body += '</footer>';
+                 $('body').html(html_body);
+                 //初始化登出事件
+                 loginOut()
+
+                 //添加相册
+                 $('#add_pics').on('click', function(){
+                     console.log('nihao')
+                    var share = $('.share');
+                    var add_url = "http://172.17.0.9:8000/api/v1/photos/"+ blog_username;
+                    var post_data = {'photos_name':'默认相册','username':blog_username}
+                    console.log(post_data)
+                    $.ajax({
+                        type:"post",
+                        contentType:"application/json",
+                        dataType:"json",
+                        url:add_url,
+                        data:JSON.stringify(post_data),
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        success:function (result){
+                            if(result.code == 200){
+                                alert('增加相册成功');
+                               window.location.reload()
+                            }else{
+                             alert(result.error);
+                            };
+                        },
+                      })
+                    });
+
+                 //删除相册
+                   $('.del').on('click', function(evt){
+                       evt.preventDefault();
+                       var delete_id = $(this).children('span').text();
+                       var delete_url = "http://172.17.0.9:8000/api/v1/photos/"+ blog_username + "?" + 'photos_id=' + delete_id;
+                       console.log('nini')
+                        $.ajax({
+                        // 请求方式
+                        type:"delete",
+                        url: delete_url,
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", token);
+                        },
+                        success:function (result) {
+                            if(result.code == 200){
+                                  alert('删除成功');
+                               window.location.reload()
+                            }else{
+                               alert('删除失败');
+                            };
+                        },
+
+                        });
+                   });
+
+                 //下拉菜单
+                 $('.nav>li').hover(function () {
+                     $(this).children('ul').stop(true, true).show(400);
+                 }, function () {
+                     $(this).children('ul').stop(true, true).hide(400);
+                 });
+             }else{
+                 alert(result.error)
+             }
+         }
+    });
+  </script>
+
+</head>
+<body>
+
+</body>
+
+
+
+</html>
