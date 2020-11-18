@@ -30,7 +30,7 @@ desc:this demo is about blog.
          // 请求方式
          type:"get",
          // url
-         url:"http://172.17.0.9:8000/api/v1/users/"+ blog_username,
+         url:"http://42.192.36.155:8000/api/v1/users/"+ blog_username,
          beforeSend: function(request) {
              request.setRequestHeader("Authorization", token);
          },
@@ -60,7 +60,7 @@ desc:this demo is about blog.
                  html_body += '<div class="about">';
                  //avatar
                  if (result.data.avatar) {
-                     var avatar_url = 'http://172.17.0.9:8000/media/'+ result.data.avatar;
+                     var avatar_url = 'http://42.192.36.155:8000/media/'+ result.data.avatar;
                      html_body += '<p class="avatar"> <img src=' + avatar_url + ' alt=""> </p>';
                  }else{
                      html_body += '<p class="avatar"> <img src="/static/images/avatar.jpg" alt=""> </p>';

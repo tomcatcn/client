@@ -31,7 +31,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
          // 请求方式
          type:"get",
          // url
-         url:"http://172.17.0.9:8000/api/v1/photos/"+ blog_username,
+         url:"http://42.192.36.155:8000/api/v1/photos/"+ blog_username,
          beforeSend: function(request) {
              request.setRequestHeader("Authorization", token);
          },
@@ -63,12 +63,12 @@ A ny individuals and organizations and not for commercial use, professiona websi
                  }else{
                       for(var p in photos){
 
-                      var pic_url = "http://172.17.0.9:5000/"+ blog_username+'/photos/detail/'+photos[p].photos_id
+                      var pic_url = "http://42.192.36.155:5000/"+ blog_username+'/photos/detail/'+photos[p].photos_id
                       var pic_name = photos[p].photos_name
                       var pic_cover = photos[p].photos_cover
                       var p_id = photos[p].photos_id
                       html_body += '<li >'
-                      html_body += '<div class="shareli"><a href="'+pic_url+'" target="_blank"> <i><img src="'+'http://172.17.0.9:8000/media/'+pic_cover+'"></i>'
+                      html_body += '<div class="shareli"><a href="'+pic_url+'" target="_blank"> <i><img src="'+'http://42.192.36.155:8000/media/'+pic_cover+'"></i>'
                       html_body += '<h2><b>'+pic_name+'</b></h2>'
                       if (username == blog_username){
                       html_body +=  '<span class="del">删除<span  style="display:none">'+p_id+'</span></span>'
@@ -96,7 +96,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
                  $('#add_pics').on('click', function(){
                      console.log('nihao')
                     var share = $('.share');
-                    var add_url = "http://172.17.0.9:8000/api/v1/photos/"+ blog_username;
+                    var add_url = "http://42.192.36.155:8000/api/v1/photos/"+ blog_username;
                     var post_data = {'photos_name':'默认相册','username':blog_username}
                     console.log(post_data)
                     $.ajax({
@@ -123,7 +123,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
                    $('.del').on('click', function(evt){
                        evt.preventDefault();
                        var delete_id = $(this).children('span').text();
-                       var delete_url = "http://172.17.0.9:8000/api/v1/photos/"+ blog_username + "?" + 'photos_id=' + delete_id;
+                       var delete_url = "http://42.192.36.155:8000/api/v1/photos/"+ blog_username + "?" + 'photos_id=' + delete_id;
                        console.log('nini')
                         $.ajax({
                         // 请求方式

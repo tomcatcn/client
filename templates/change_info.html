@@ -27,7 +27,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
        // 请求方式
        type:"get",
        // url
-       url:"http://172.17.0.9:8000/api/v1/users/"+ username,
+       url:"http://42.192.36.155:8000/api/v1/users/"+ username,
        beforeSend: function(request) {
            request.setRequestHeader("Authorization", token);
        },
@@ -48,7 +48,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
                html_body += '<form action=""  method="post" enctype="multipart/form-data" class="avatar_form">';
                //avatar
                if (result.data.avatar) {
-                   var avatar_url = 'http://172.17.0.9:8000/media/'+ result.data.avatar;
+                   var avatar_url = 'http://42.192.36.155:8000/media/'+ result.data.avatar;
                    html_body += '<p class="avatar"> <img src=' + avatar_url + ' alt=""> </p>';
                }else{
                    html_body += '<p class="avatar"> <img src="/static/images/avatar.jpg" alt=""> </p>';
@@ -117,8 +117,8 @@ A ny individuals and organizations and not for commercial use, professiona websi
     function upload(){
         var token = window.localStorage.getItem('dnblog_token')
         var username = window.localStorage.getItem('dnblog_user')
-        //$('.avatar_form').attr('action', 'http://172.17.0.9/users/avatar')
-        var url = 'http://172.17.0.9:8000/api/v1/users/' + username + '/avatar'
+        //$('.avatar_form').attr('action', 'http://42.192.36.155/users/avatar')
+        var url = 'http://42.192.36.155:8000/api/v1/users/' + username + '/avatar'
         formdata = new FormData();
         formdata.append("avatar",$("#avatar")[0].files[0]);
         $.ajax({
@@ -158,7 +158,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
         // dataType
         dataType:"json",
         // url
-        url:"http://172.17.0.9:8000/api/v1/users/" + username,
+        url:"http://42.192.36.155:8000/api/v1/users/" + username,
         // 把JS的对象或数组序列化一个json 字符串
         data:JSON.stringify(post_data),
         // result 为请求的返回结果对象

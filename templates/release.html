@@ -36,7 +36,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
       // 请求方式
       type:"get",
       // url
-      url:"http://172.17.0.9:8000/api/v1/users/"+ username,
+      url:"http://42.192.36.155:8000/api/v1/users/"+ username,
       async: false,
       beforeSend: function(request) {
           request.setRequestHeader("Authorization", token);
@@ -114,7 +114,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
                   // dataType
                   dataType:"json",
                   // url
-                  url:"http://172.17.0.9:8000/api/v1/topics/" + username,
+                  url:"http://42.192.36.155:8000/api/v1/topics/" + username,
                   // 把JS的对象或数组序列化一个json 字符串
                   data:JSON.stringify(post_data),
                   // result 为请求的返回结果对象
